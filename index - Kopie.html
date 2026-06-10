@@ -103,6 +103,10 @@
       </div>
     </div>
 
+  <script type="module">
+    import { submitScores } from "./submitScores.js";
+    window.submitScores = submitScores;
+  </script>
   <script>
   // Simple single-file Pac-Man implementation.
   // Map legend:
@@ -728,6 +732,16 @@
     return null;
   }
 
+  function handleScoreSubmission() {
+    if (typeof window.submitScores !== 'function') return;
+    const p1 = prompt("Game Over! Player 1, enter your name for the leaderboard:");
+    if (p1) window.submitScores("Pacman", score, p1).catch(console.error);
+    if (typeof score2 !== 'undefined') {
+      const p2 = prompt("Game Over! Player 2, enter your name for the leaderboard:");
+      if (p2) window.submitScores("Pacman", score2, p2).catch(console.error);
+    }
+  }
+
   function gameOver(){
     // Save highscore if needed and return to main menu showing the winner
     const prev = loadHighscore(); if(score > prev) saveHighscore(score);
@@ -751,6 +765,7 @@
         else { winnerId = 'tie'; title = 'It\'s a tie!'; }
       }
     }
+    handleScoreSubmission();
     showMainMenuWithWinner({ title: title, winner: winnerId, stats: { score1: score, score2: score2, pellets1: pelletsCollected, pellets2: pelletsCollected2, lives1: lives, lives2: lives2 }, colors: { p1: pac1Color, p2: pac2Color } });
   }
 
@@ -1150,6 +1165,7 @@
         // Save highscores
         const prev = loadHighscore(); if(score > prev) saveHighscore(score);
         if(typeof loadHighscore2 === 'function'){ const prev2 = loadHighscore2(); if(typeof saveHighscore2 === 'function' && typeof score2 !== 'undefined' && score2 > prev2) saveHighscore2(score2); }
+        handleScoreSubmission();
         showMainMenuWithWinner({ title: winnerText, winner: winnerId, stats: { score1: score, score2: score2, pellets1: pelletsCollected, pellets2: pelletsCollected2, lives1: lives, lives2: lives2 }, colors: { p1: pac1Color, p2: pac2Color } });
       }, 700);
     }
