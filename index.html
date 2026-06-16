@@ -94,7 +94,8 @@
       </div>
     </div>
 
-  <script>
+<script type="module">
+  import { submitScores } from "./submitScores.js";
   // Simple single-file Pac-Man implementation.
   // Map legend:
   // '#' wall, '.' pellet, 'o' power pellet, ' ' empty
@@ -603,6 +604,16 @@
     const prev = loadHighscore();
     if(score > prev) saveHighscore(score);
     // show main menu so player can restart or personalize
+    setTimeout(async () => {
+        let playerName = prompt("Gib deinen Namen für die Bestenliste ein:");
+        if (playerName && playerName.trim()) {
+          try {
+            await submitScores("Flappy Bird", score, playerName);
+          } catch (err) {
+            console.error("Fehler beim Senden des Scores:", err);
+          }
+        }
+      }, 50);
     showMainMenu();
   }
 
@@ -868,6 +879,16 @@
       // show end overlay and pause; wait for user to restart or choose color
       paused = true;
       showEndOverlay('You win! Score: ' + score);
+      setTimeout(async () => {
+        let playerName = prompt("Gib deinen Namen für die Bestenliste ein:");
+        if (playerName && playerName.trim()) {
+          try {
+            await submitScores("Flappy Bird", score, playerName);
+          } catch (err) {
+            console.error("Fehler beim Senden des Scores:", err);
+          }
+        }
+      }, 50);
     }
     requestAnimationFrame(loop);
   }
