@@ -608,7 +608,7 @@
         let playerName = prompt("Gib deinen Namen für die Bestenliste ein:");
         if (playerName && playerName.trim()) {
           try {
-            await submitScores("Flappy Bird", score, playerName);
+            await submitScores("Pacman", score, playerName);
           } catch (err) {
             console.error("Fehler beim Senden des Scores:", err);
           }
@@ -883,7 +883,7 @@
         let playerName = prompt("Gib deinen Namen für die Bestenliste ein:");
         if (playerName && playerName.trim()) {
           try {
-            await submitScores("Flappy Bird", score, playerName);
+            await submitScores("Pacman", score, playerName);
           } catch (err) {
             console.error("Fehler beim Senden des Scores:", err);
           }
